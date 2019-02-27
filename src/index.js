@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Game from './components/Game'
+import App from './components/App'
+import { HashRouter } from 'react-router-dom';
 
 
 
 // ========================================
 
-ReactDOM.render(
-  <Game />,
-  document.getElementById('root')
-);
+const render = (Component) => {
+
+  ReactDOM.render(
+    <HashRouter>
+      <Component />
+    </HashRouter>,
+    document.getElementById('root')
+  );
+
+};
+
+render(App);
