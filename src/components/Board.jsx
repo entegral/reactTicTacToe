@@ -1,16 +1,21 @@
 import React from 'react';
 import Square from './Square';
 import calculateWinner from '../HelperFunctions';
+import { connect } from 'react-redux';
 
 class Board extends React.Component {
+
+
   constructor(props) {
     super(props);
+    console.log(props.squares)
     this.state = {
       squares: [null, null, null, null, null, null, null, null, null],
         xIsNext: true
     };
     this.handleFillSquare = this.handleFillSquare.bind(this);
   }
+
 
   handleFillSquare (squareId) {
 
@@ -20,7 +25,6 @@ class Board extends React.Component {
       return;
     }
 
-
     squares[squareId] = (this.state.xIsNext ? 'X' : 'O');
     this.setState( {
       squares: squares,
@@ -28,11 +32,13 @@ class Board extends React.Component {
     })
   }
 
+
   renderSquare(i) {
     return <Square
       value={this.state.squares[i]}
       onClick={() => {this.handleFillSquare(i)}} />;
   }
+
 
   render() {
     const winner = calculateWinner(this.state.squares);
@@ -43,8 +49,6 @@ class Board extends React.Component {
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
-
-
 
     return (
       <div>
@@ -69,4 +73,10 @@ class Board extends React.Component {
   }
 }
 
-export default Board;
+const mapStateToProps = state => {
+  return {
+    squares: state
+  };
+};
+
+export default connect(mapStateToProps)(Board);
