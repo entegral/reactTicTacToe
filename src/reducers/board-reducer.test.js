@@ -6,22 +6,30 @@ describe('boardReducer', () => {
     expect(boardReducer({}, { type: null })).toEqual({});
   });
 
-  test('Should create board with empty squares', () => {
+  test('Should update game board squares with latest play and add previous board squares to history', () => {
     expect(boardReducer(
       {
         squares:[null, null, null, null, null, null, null, null, null],
-        xIsNext: true
+        xIsNext: true,
+        history: [{squares: [null, null, null, null, null, null, null, null, null]}]
       },
       {
         type: 'FILL_SQUARE',
         squares:[null, null, null, null, null, null, null, null, 'X'],
-        xIsNext: false
+        xIsNext: false,
+        history: [{squares: [null, null, null, null, null, null, null, null, null]}]
       }
     )).toEqual(
         {
           squares: [null, null, null, null, null, null, null, null, 'X'],
-          xIsNext: false
+          xIsNext: false,
+          history: [
+            {squares: [null, null, null, null, null, null, null, null, null]},
+            {squares: [null, null, null, null, null, null, null, null, 'X']}
+          ]
         });
   });
+
+
 
 });

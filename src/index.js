@@ -8,8 +8,9 @@ import boardReducer from './reducers/board-reducer';
 import { Provider } from 'react-redux';
 
 const initialState = {
-  squares: [null, null, null, null, null, null, null, null, null],
-  xIsNext: true
+  // squares: [null, null, null, null, null, null, null, null, null],
+  xIsNext: true,
+  history: [{squares: [null, null, null, null, null, null, null, null, null]}]
 }
 
 const store = createStore(boardReducer, initialState);

@@ -10,8 +10,7 @@ class Board extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      squares: [null, null, null, null, null, null, null, null, null],
-        xIsNext: true
+
     };
     this.handleFillSquare = this.handleFillSquare.bind(this);
   }
@@ -20,20 +19,22 @@ class Board extends React.Component {
   handleFillSquare (squareId) {
 
     const gameState = {...this.props.gameState};
+    const latestGame = {...this.props.latestGame};
 
     const { dispatch } = this.props;
 
-    if(calculateWinner(gameState.squares) || gameState.squares[squareId]){
+    if(calculateWinner(latestGame.squares) || latestGame.squares[squareId]){
       return;
     }
 
-    gameState.squares[squareId] = (gameState.xIsNext ? 'X' : 'O');
+    latestGame.squares[squareId] = (gameState.xIsNext ? 'X' : 'O');
     gameState.xIsNext = !gameState.xIsNext;
 
     const action = {
       type: 'FILL_SQUARE',
-      squares: gameState.squares,
-      xIsNext: gameState.xIsNext
+      squares: latestGame.squares,
+      xIsNext: gameState.xIsNext,
+      history: gameState.history
     }
     dispatch(action);
   }
@@ -41,13 +42,13 @@ class Board extends React.Component {
 
   renderSquare(i) {
     return <Square
-      value={this.props.gameState.squares[i]}
+      value={this.props.latestGame.squares[i]}
       onClick={() => {this.handleFillSquare(i)}} />;
   }
 
 
   render() {
-    const winner = calculateWinner(this.props.gameState.squares);
+    const winner = calculateWinner(this.props.latestGame.squares);
     let status;
     let currentGameState = null
 
@@ -82,7 +83,8 @@ class Board extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    gameState: state
+    gameState: state,
+    latestGame: state.history[state.history.length - 1]
   };
 };
 
