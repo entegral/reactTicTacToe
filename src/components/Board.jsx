@@ -8,7 +8,7 @@ class Board extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(props.gameState)
+    console.log('constructor',props.gameState)
     this.state = {
       squares: [null, null, null, null, null, null, null, null, null],
         xIsNext: true
@@ -23,9 +23,9 @@ class Board extends React.Component {
 
     const { dispatch } = this.props;
 
-    // if(calculateWinner(squares) || squares[squareId]){
-    //   return;
-    // }
+    if(calculateWinner(gameState.squares) || gameState.squares[squareId]){
+      return;
+    }
 
     gameState.squares[squareId] = (gameState.xIsNext ? 'X' : 'O');
     gameState.xIsNext = !gameState.xIsNext;
@@ -41,7 +41,7 @@ class Board extends React.Component {
 
   renderSquare(i) {
     return <Square
-      value={this.props.gameState[i]}
+      value={this.props.gameState.squares[i]}
       onClick={() => {this.handleFillSquare(i)}} />;
   }
 
@@ -53,7 +53,7 @@ class Board extends React.Component {
     if (winner) {
       status = 'Winner ' + winner;
     } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+      status = 'Next player: ' + (this.props.gameState.xIsNext ? 'X' : 'O');
     }
 
     return (
