@@ -8,7 +8,6 @@ class Board extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('constructor',props.gameState)
     this.state = {
       squares: [null, null, null, null, null, null, null, null, null],
         xIsNext: true
@@ -33,7 +32,7 @@ class Board extends React.Component {
     const action = {
       type: 'FILL_SQUARE',
       squares: gameState.squares,
-      isNext: gameState.xIsNext
+      xIsNext: gameState.xIsNext
     }
     dispatch(action);
   }
@@ -47,7 +46,7 @@ class Board extends React.Component {
 
 
   render() {
-    const winner = false;
+    const winner = calculateWinner(this.props.gameState.squares);
     let status;
 
     if (winner) {

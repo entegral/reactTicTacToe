@@ -6,8 +6,22 @@ describe('boardReducer', () => {
     expect(boardReducer({}, { type: null })).toEqual({});
   });
 
-  // test('Should create board with empty squares', () => {
-  //   expect(boardReducer({}, { type: 'CREATE_BOARD'})).toEqual({squares: [null, null, null, null, null, null, null, null, null]});
-  // });
+  test('Should create board with empty squares', () => {
+    expect(boardReducer(
+      {
+        squares:[null, null, null, null, null, null, null, null, null],
+        xIsNext: true
+      },
+      {
+        type: 'FILL_SQUARE',
+        squares:[null, null, null, null, null, null, null, null, 'X'],
+        xIsNext: false
+      }
+    )).toEqual(
+        {
+          squares: [null, null, null, null, null, null, null, null, 'X'],
+          xIsNext: false
+        });
+  });
 
 });

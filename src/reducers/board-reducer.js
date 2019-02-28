@@ -4,7 +4,7 @@ export default (
     case 'FILL_SQUARE':
       return {
         squares: action.squares,
-        xIsNext: action.isNext
+        xIsNext: action.xIsNext
       }
     default:
       return state;
