@@ -7,7 +7,13 @@ import { createStore } from 'redux';
 import boardReducer from './reducers/board-reducer';
 import { Provider } from 'react-redux';
 
-const store = createStore(boardReducer);
+const initialState = {
+  squares: [null, null, null, null, null, null, null, null, null],
+  xIsNext: true
+}
+
+const store = createStore(boardReducer, initialState);
+
 
 const render = (Component) => {
 
