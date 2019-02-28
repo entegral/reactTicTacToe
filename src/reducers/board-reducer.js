@@ -1,7 +1,10 @@
-export default (state = {}, action) => {
+export default (
+  state = {
+    squares: [null, null, null, null, null, null, null, null, null],
+    xIsNext: true
+  }, action) => {
   switch (action.type) {
-    case 'CREATE_BOARD':
-      return action.squares;
+    
     default:
       return state;
   }
