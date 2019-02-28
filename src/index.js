@@ -14,6 +14,10 @@ const initialState = {
 
 const store = createStore(boardReducer, initialState);
 
+let unsubscribe = store.subscribe(() =>
+  console.log(store.getState())
+);
+
 
 const render = (Component) => {
 

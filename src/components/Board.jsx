@@ -8,7 +8,7 @@ class Board extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(props.squares)
+    console.log(props.gameState)
     this.state = {
       squares: [null, null, null, null, null, null, null, null, null],
         xIsNext: true
@@ -19,29 +19,35 @@ class Board extends React.Component {
 
   handleFillSquare (squareId) {
 
-    const squares = this.state.squares.slice();
+    const gameState = {...this.props.gameState};
 
-    if(calculateWinner(squares) || squares[squareId]){
-      return;
+    const { dispatch } = this.props;
+
+    // if(calculateWinner(squares) || squares[squareId]){
+    //   return;
+    // }
+
+    gameState.squares[squareId] = (gameState.xIsNext ? 'X' : 'O');
+    gameState.xIsNext = !gameState.xIsNext;
+
+    const action = {
+      type: 'FILL_SQUARE',
+      squares: gameState.squares,
+      isNext: gameState.xIsNext
     }
-
-    squares[squareId] = (this.state.xIsNext ? 'X' : 'O');
-    this.setState( {
-      squares: squares,
-      xIsNext: !this.state.xIsNext
-    })
+    dispatch(action);
   }
 
 
   renderSquare(i) {
     return <Square
-      value={this.state.squares[i]}
+      value={this.props.gameState[i]}
       onClick={() => {this.handleFillSquare(i)}} />;
   }
 
 
   render() {
-    const winner = calculateWinner(this.state.squares);
+    const winner = false;
     let status;
 
     if (winner) {
@@ -75,7 +81,7 @@ class Board extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    squares: state
+    gameState: state
   };
 };
 
